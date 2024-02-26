@@ -8,7 +8,7 @@ type Book = {
   year: number
 }
 
-const books: Book[] = [
+const data: Book[] = [
   { id: 1, title: "The Fault in Our Stars", author: "John Green", year: 2012 },
   { id: 2, title: "Gone Girl", author: "Gillian Flynn", year: 2012 },
   { id: 3, title: "The Hunger Games", author: "Suzanne Collins", year: 2008 },
@@ -28,7 +28,7 @@ const books: Book[] = [
 
 function App() {
   //* STATES
-  const [data, setData] = useState(books)
+  const [books, setBooks] = useState(data)
   const [selectedYear, setSelectedYear] = useState<number | null>(null)
 
   //* DERIVED STATES
@@ -41,6 +41,13 @@ function App() {
     ),
   ]
 
+  const filteredBooks = books.filter((book) => {
+    if (!selectedYear) {
+      return true
+    }
+    return book.year === selectedYear
+  })
+
   return (
     <>
       <ul className="bg-yellow-100 p-4 mb-4 w-fit">
@@ -48,7 +55,9 @@ function App() {
           <strong>selectedYear: </strong>
           {selectedYear || "null"}
         </li>
+        <li>{filteredBooks.length}</li>
       </ul>
+
       <section className="mb-8">
         <p className="text-sm font-semibold mb-2 text-gray-800 indent-3">
           Filter by year
@@ -74,22 +83,37 @@ function App() {
       </section>
 
       <section>
-        <h2 className="text-2xl font-bold">Books by year</h2>
-        {years.map((year) => {
-          const booksOfYear = data.filter((book) => book.year === year)
-          return (
-            <>
-              <h3 className="font-semibold mt-4">{year}</h3>
-              <ul className="list-inside list-disc">
-                {booksOfYear.map((book) => (
-                  <li>
-                    {book.title}({book.year})
-                  </li>
-                ))}
+        <h2 className="text-2xl font-bold mb-4">Books by year</h2>
+        {selectedYear ? (
+          <>
+            <h3 className="font-semibold text-gray-800">
+              {selectedYear} books
+            </h3>
+            {filteredBooks.map((book) => (
+              <ul className="list-disc list-inside">
+                <li>
+                  {book.title}({book.year})
+                </li>
               </ul>
-            </>
-          )
-        })}
+            ))}
+          </>
+        ) : (
+          years.map((year) => {
+            const booksOfYear = books.filter((book) => book.year === year)
+            return (
+              <>
+                <h3 className="font-semibold mt-4">{year}</h3>
+                <ul className="list-inside list-disc">
+                  {booksOfYear.map((book) => (
+                    <li>
+                      {book.title}({book.year})
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )
+          })
+        )}
       </section>
     </>
   )
