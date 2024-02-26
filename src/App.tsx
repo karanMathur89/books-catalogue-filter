@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react"
+import { useState } from "react"
 import "./App.css"
 
 type Book = {
@@ -28,7 +28,7 @@ const data: Book[] = [
 
 function App() {
   //* STATES
-  const [books] = useState(data)
+  const [books, setBooks] = useState(data)
   const [selectedYears, setSelectedYears] = useState<number[]>([])
 
   //* DERIVED STATES
@@ -41,9 +41,16 @@ function App() {
     ),
   ]
 
-  const filteredBooks = books.filter((book) =>
-    selectedYears.includes(book.year)
-  )
+  //* HANDLER FUNCTIONS
+  function handleClick(year: number) {
+    if (!selectedYears.includes(year)) {
+      setSelectedYears([...selectedYears, year])
+      return
+    }
+    setSelectedYears(
+      selectedYears.filter((selectedYear) => selectedYear !== year)
+    )
+  }
 
   return (
     <>
@@ -51,10 +58,6 @@ function App() {
         <li>
           <strong>selectedYears: </strong>
           {JSON.stringify(selectedYears.slice().sort(), null, 2)}
-        </li>
-        <li>
-          <strong>Number of filtered books: </strong>
-          {filteredBooks.length}
         </li>
       </ul>
 
@@ -69,59 +72,12 @@ function App() {
               className={`px-3 py-1 rounded-full ${
                 selectedYears.includes(year) ? "bg-yellow-300" : "bg-gray-100"
               }`}
-              onClick={() => {
-                if (!selectedYears.includes(year)) {
-                  setSelectedYears([...selectedYears, year])
-                  return
-                }
-                setSelectedYears(
-                  selectedYears.filter((selectedYear) => selectedYear !== year)
-                )
-              }}
+              onClick={() => handleClick(year)}
             >
               {year}
             </button>
           ))}
         </ul>
-      </section>
-
-      <section>
-        <h2 className="text-2xl font-bold mb-4">Books by year</h2>
-        {selectedYears.length === 0
-          ? years.map((year) => {
-              const booksOfYear = books.filter((book) => book.year === year)
-              return (
-                <Fragment key={year}>
-                  <h3 className="font-semibold mt-4">{year} books</h3>
-                  <ul className="list-disc list-inside">
-                    {booksOfYear.map((book) => (
-                      <li key={book.id}>
-                        {book.title}({book.year})
-                      </li>
-                    ))}
-                  </ul>
-                </Fragment>
-              )
-            })
-          : years.map((year) => {
-              const booksOfYear = filteredBooks.filter(
-                (book) => book.year === year
-              )
-              return (
-                <Fragment key={year}>
-                  {booksOfYear.length > 0 && (
-                    <h3 className="font-semibold mt-4">{year} books</h3>
-                  )}
-                  <ul className="list-disc list-inside">
-                    {booksOfYear.map((book) => (
-                      <li key={book.id}>
-                        {book.title}({book.year})
-                      </li>
-                    ))}
-                  </ul>
-                </Fragment>
-              )
-            })}
       </section>
     </>
   )
