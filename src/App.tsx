@@ -28,7 +28,7 @@ const data: Book[] = [
 
 function App() {
   //* STATES
-  const [books, setBooks] = useState(data)
+  const [books] = useState(data)
   const [selectedYears, setSelectedYears] = useState<number[]>([])
 
   //* DERIVED STATES
