@@ -45,7 +45,7 @@ function App() {
   function handleClick(year: number) {
     //selectedYears logic
     if (!selectedYears.includes(year)) {
-      setSelectedYears([...selectedYears, year])
+      setSelectedYears([...selectedYears, year].toSorted())
     } else {
       setSelectedYears(
         selectedYears.filter((selectedYear) => selectedYear !== year)
@@ -82,6 +82,22 @@ function App() {
             </button>
           ))}
         </ul>
+      </section>
+
+      <section>
+        {selectedYears.map((year) => {
+          const booksOfYear = books.filter((book) => year === book.year)
+          return (
+            <>
+              <h2 className="font-semibold mt-6 text-xl">{year} books</h2>
+              <ul className="list-inside list-disc">
+                {booksOfYear.map((book) => (
+                  <li>{book.title} ({book.year})</li>
+                ))}
+              </ul>
+            </>
+          )
+        })}
       </section>
     </>
   )
