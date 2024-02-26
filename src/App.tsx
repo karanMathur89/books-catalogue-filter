@@ -85,19 +85,37 @@ function App() {
       </section>
 
       <section>
-        {selectedYears.map((year) => {
-          const booksOfYear = books.filter((book) => year === book.year)
-          return (
-            <>
-              <h2 className="font-semibold mt-6 text-xl">{year} books</h2>
-              <ul className="list-inside list-disc">
-                {booksOfYear.map((book) => (
-                  <li>{book.title} ({book.year})</li>
-                ))}
-              </ul>
-            </>
-          )
-        })}
+        {selectedYears.length > 0
+          ? selectedYears.map((year) => {
+              const booksOfYear = books.filter((book) => year === book.year)
+              return (
+                <>
+                  <h2 className="font-semibold mt-6 text-xl">{year} books</h2>
+                  <ul className="list-inside list-disc">
+                    {booksOfYear.map((book) => (
+                      <li>
+                        {book.title} ({book.year})
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )
+            })
+          : years.map((year) => {
+              const booksOfYear = books.filter((book) => year === book.year)
+              return (
+                <>
+                  <h2 className="font-semibold mt-6 text-xl">{year} books</h2>
+                  <ul className="list-inside list-disc">
+                    {booksOfYear.map((book) => (
+                      <li>
+                        {book.title} ({book.year})
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )
+            })}
       </section>
     </>
   )
