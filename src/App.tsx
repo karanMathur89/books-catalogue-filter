@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { Fragment, useState } from "react"
 import "./App.css"
 
 type Book = {
@@ -43,13 +43,14 @@ function App() {
 
   //* HANDLER FUNCTIONS
   function handleClick(year: number) {
+    //selectedYears logic
     if (!selectedYears.includes(year)) {
       setSelectedYears([...selectedYears, year])
-      return
+    } else {
+      setSelectedYears(
+        selectedYears.filter((selectedYear) => selectedYear !== year)
+      )
     }
-    setSelectedYears(
-      selectedYears.filter((selectedYear) => selectedYear !== year)
-    )
   }
 
   return (
@@ -59,6 +60,9 @@ function App() {
           <strong>selectedYears: </strong>
           {JSON.stringify(selectedYears.slice().sort(), null, 2)}
         </li>
+        {/* <li>
+          <strong>Number of filtered books:</strong> {filteredBooks.length}
+        </li> */}
       </ul>
 
       <section className="mb-8 p-4 bg-indigo-500 rounded w-fit">
