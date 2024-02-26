@@ -41,6 +41,8 @@ function App() {
     ),
   ]
 
+  const filteredYears = selectedYears.length === 0 ? years : selectedYears
+
   //* HANDLER FUNCTIONS
   function handleClick(year: number) {
     //selectedYears logic
@@ -85,37 +87,21 @@ function App() {
       </section>
 
       <section>
-        {selectedYears.length > 0
-          ? selectedYears.map((year) => {
-              const booksOfYear = books.filter((book) => year === book.year)
-              return (
-                <>
-                  <h2 className="font-semibold mt-6 text-xl">{year} books</h2>
-                  <ul className="list-inside list-disc">
-                    {booksOfYear.map((book) => (
-                      <li>
-                        {book.title} ({book.year})
-                      </li>
-                    ))}
-                  </ul>
-                </>
-              )
-            })
-          : years.map((year) => {
-              const booksOfYear = books.filter((book) => year === book.year)
-              return (
-                <>
-                  <h2 className="font-semibold mt-6 text-xl">{year} books</h2>
-                  <ul className="list-inside list-disc">
-                    {booksOfYear.map((book) => (
-                      <li>
-                        {book.title} ({book.year})
-                      </li>
-                    ))}
-                  </ul>
-                </>
-              )
-            })}
+        {filteredYears.map((year) => {
+          const booksOfYear = books.filter((book) => year === book.year)
+          return (
+            <>
+              <h2 className="font-semibold mt-6 text-xl">{year} books</h2>
+              <ul className="list-inside list-disc">
+                {booksOfYear.map((book) => (
+                  <li>
+                    {book.title} ({book.year})
+                  </li>
+                ))}
+              </ul>
+            </>
+          )
+        })}
       </section>
     </>
   )
