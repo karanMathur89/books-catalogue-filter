@@ -52,7 +52,10 @@ function App() {
           <strong>selectedYears: </strong>
           {JSON.stringify(selectedYears.slice().sort(), null, 2)}
         </li>
-        <li>{filteredBooks.length}</li>
+        <li>
+          <strong>Number of filtered books: </strong>
+          {filteredBooks.length}
+        </li>
       </ul>
 
       <section className="mb-8 p-4 bg-indigo-500 rounded w-fit">
