@@ -57,13 +57,9 @@ function App() {
 
   return (
     <>
-      <ul className="bg-blue-300 p-4 mb-4 w-fit">
-        <li>
-          <strong>selectedYears: </strong>
-          {JSON.stringify(selectedYears.slice().sort(), null, 2)}
-        </li>
-      </ul>
-
+      <h1 className="my-8 text-4xl text-center font-bold font-serif">
+        Books catalog
+      </h1>
       <section className="mb-8 p-4 bg-emerald-600 rounded">
         <p className="text-sm font-medium mb-2 text-gray-100">Filter by year</p>
         <ul className="flex gap-2">
