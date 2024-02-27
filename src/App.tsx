@@ -85,7 +85,7 @@ function App() {
               <h2 className="font-semibold first:mt-8 mt-12 mb-2 text-xl">
                 {year} books
               </h2>
-              <ul className="list-inside list-disc grid gap-2 md:grid-cols-2">
+              <ul className="list-inside list-disc grid gap-2 sm:grid-cols-2">
                 {booksOfYear.map((book) => (
                   <BookItem book={book} />
                 ))}
