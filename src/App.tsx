@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react"
+import { useState } from "react"
 import "./App.css"
 
 type Book = {
@@ -28,7 +28,7 @@ const data: Book[] = [
 
 function App() {
   //* STATES
-  const [books, setBooks] = useState(data)
+  const [books] = useState(data)
   const [selectedYears, setSelectedYears] = useState<number[]>([])
 
   //* DERIVED STATES
@@ -57,26 +57,21 @@ function App() {
 
   return (
     <>
-      <ul className="bg-yellow-100 p-4 mb-4 w-fit">
+      <ul className="bg-blue-300 p-4 mb-4 w-fit">
         <li>
           <strong>selectedYears: </strong>
           {JSON.stringify(selectedYears.slice().sort(), null, 2)}
         </li>
-        {/* <li>
-          <strong>Number of filtered books:</strong> {filteredBooks.length}
-        </li> */}
       </ul>
 
-      <section className="mb-8 p-4 bg-indigo-500 rounded w-fit">
-        <p className="text-sm font-semibold mb-2 text-gray-200 indent-3">
-          Filter by year
-        </p>
+      <section className="mb-8 p-4 bg-emerald-600 rounded">
+        <p className="text-sm font-medium mb-2 text-gray-100">Filter by year</p>
         <ul className="flex gap-2">
           {years.map((year) => (
             <button
               key={year}
               className={`px-3 py-1 rounded-full ${
-                selectedYears.includes(year) ? "bg-yellow-300" : "bg-gray-100"
+                selectedYears.includes(year) ? "bg-amber-300" : "bg-gray-100/90"
               }`}
               onClick={() => handleClick(year)}
             >
@@ -91,12 +86,12 @@ function App() {
           const booksOfYear = books.filter((book) => year === book.year)
           return (
             <>
-              <h2 className="font-semibold mt-6 text-xl">{year} books</h2>
-              <ul className="list-inside list-disc">
+              <h2 className="font-semibold first:mt-8 mt-12 mb-2 text-xl">
+                {year} books
+              </h2>
+              <ul className="list-inside list-disc grid gap-2 md:grid-cols-2">
                 {booksOfYear.map((book) => (
-                  <li>
-                    {book.title} ({book.year})
-                  </li>
+                  <BookItem book={book} />
                 ))}
               </ul>
             </>
@@ -104,6 +99,19 @@ function App() {
         })}
       </section>
     </>
+  )
+}
+
+function BookItem({ book }: { book: Book }) {
+  return (
+    <li className="grid p-4 bg-gray-100 rounded shadow">
+      <p>
+        <span className="text-xl font-serif font-semibold">{book.title}</span>{" "}
+        &bull; <span className="text-gray-600">{book.year}</span>
+      </p>
+
+      <p className="italic">Written by {book.author}</p>
+    </li>
   )
 }
 
