@@ -47,7 +47,7 @@ function App() {
   function handleClick(year: number) {
     //selectedYears logic
     if (!selectedYears.includes(year)) {
-      setSelectedYears([...selectedYears, year].toSorted())
+      setSelectedYears([...selectedYears, year].slice().sort())
     } else {
       setSelectedYears(
         selectedYears.filter((selectedYear) => selectedYear !== year)
@@ -61,7 +61,9 @@ function App() {
         Books catalog
       </h1>
       <section className="mb-8 p-4 bg-emerald-600 rounded">
-        <p className="text-sm font-medium mb-2 text-gray-100">Filter by year</p>
+        <p className="text-sm font-medium  mb-2 text-gray-100">
+          Filter by year
+        </p>
         <ul className="flex gap-2">
           {years.map((year) => (
             <button
